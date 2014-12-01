@@ -38,6 +38,11 @@ PROMPT="%D{%T} %n@%m%{${fg[yellow]}%}[%~]%{${reset_color}%}
 %% "
 SPROMPT="%{${fg[yellow]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
 
+# if is-at-least 4.3.10; then
+# else
+# source ~/.git-prompt.sh
+# setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+
 autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
@@ -62,6 +67,8 @@ bindkey "^S" history-incremental-search-forward
 setopt list_packed #ls with less space
 
 setopt no_beep
+
+setopt ignoreeof # don't logout with Ctrl+D
 
 setopt noautoremoveslash
 
@@ -100,18 +107,43 @@ alias mkdir='mkdir -p'
 
 alias df='df -h'
 
+function ssh_login() {
+  local user=$1
+  local password=$2
+  local host=$3
+  if [ -z "$password" ]; then
+    echo "input a password for ${host}, please"
+    stty -echo
+    read password
+    stty echo
+  fi
+
+  expect -c "
+    spawn ssh -l ${user} ${host}
+    expect \"password:\" ; send \"${password}\n\"
+    interact
+  "
+}
+
+# alias ssh='/usr/bin/ssh'
+# alias ServerName='ssh_login UserName "" ServerName.co.jp'
+
 alias st='svn st'
-alias sk='st | grep K'
-alias sl='svn log | less'
+alias sl='svn log'
 alias sp='svn up'
 alias sd='svn diff'
 
-export GIT_PAGER="lv -c"
+export GIT_PAGER="less"
 alias g='git'
 alias ga='git add'
 alias gc='git commit'
 alias gs='git status'
+# alias gs='git status -uno'
 alias gp='git pull'
+alias go='git co'
+alias gd='git diff'
+alias gl='git log'
+alias gh='git hist'
 
 alias pr='cd ~/programming'
 

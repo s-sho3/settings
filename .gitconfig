@@ -1,0 +1,25 @@
+[user]
+  email = s-sho3@users.noreply.github.com
+  name = s-sho3
+[core]
+  editor = vim
+# filemode = false
+[alias]
+  st = status
+  ci = commit -v
+  co = checkout
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[push]
+  default = simple
+[init]
+#  templatedir = /aaa/git-core/templates
+[http]
+#  proxy = http://proxy.aaa.co.jp:0000
+[color]
+  diff = auto
+[tig "color"]
+  date = cyan default
+  diff-index = cyan default
+  diff-stat = cyan default
+

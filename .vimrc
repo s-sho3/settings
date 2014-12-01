@@ -139,3 +139,6 @@ endif
 "auto save in 200msec without action, or at escaping from insert mode.
 let g:auto_save = 1
 
+if has("autocmd") # restore a cursor position
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif

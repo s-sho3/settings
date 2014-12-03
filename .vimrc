@@ -23,6 +23,8 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 
+set clipboard=unnamed
+
 set showtabline=2
 " set guioptions-=e
 " set guioptions=e
@@ -49,7 +51,6 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 colorscheme evening
-highlight Normal guibg=#000066
 
 filetype plugin indent on
 " autocmd FileType text setlocal textwidth=78 "1 line of text file is shown 78 charactors.
@@ -139,6 +140,6 @@ endif
 "auto save in 200msec without action, or at escaping from insert mode.
 let g:auto_save = 1
 
-if has("autocmd") # restore a cursor position
+if has("autocmd") " restore a cursor position
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif

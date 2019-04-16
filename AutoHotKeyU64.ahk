@@ -11,39 +11,44 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 GroupAdd CN, ahk_exe Explorer.EXE
 GroupAdd CN, ahk_exe OUTLOOK.EXE
 GroupAdd CN, ahk_class VTWin32 # teraterm
-#IfWinNotActive ahk_group CN
+#if WinActive("ahk_group CN") == 0
 {
-^N::send,{PgDn}
+    ^N::send,{PgDn}
 }
+
+#if WinActive("ahk_exe OUTLOOK.EXE") == 0 AND WinActive("ahk_class VTWin32") == 0
+{
+    ^K::send,{Down}
+    +^K::send,+{Down}
+    #^K::send,#{Down}
+}
+
 
 ; no remap for teraterm <-- because of wrong behavior.
 #IfWinNotActive ahk_class VTWin32
 {
 ; remap doesn't work, so using "send".
-;^H::Backspace
-^H::send,{Backspace}
-^D::send,{Delete}
-^M::send,{Enter}
-^[::send,{Esc}
+    ;^H::Backspace
+    ^H::send,{Backspace}
+    ^D::send,{Delete}
+    ^M::send,{Enter}
+    ^[::send,{Esc}
 ;
-^J::send,{Left}
-^K::send,{Down}
-^I::send,{Up}
-^L::send,{Right}
+    ^J::send,{Left}
+    ^I::send,{Up}
+    ^L::send,{Right}
 ;
-^P::send,{PgUp}
-^B::send,{Home}
-^E::send,{End}
+    ^P::send,{PgUp}
+    ^B::send,{Home}
+    ^E::send,{End}
 ;
-+^J::send,+{Left}
-+^K::send,+{Down}
-+^I::send,+{Up}
-+^L::send,+{Right}
+    +^J::send,+{Left}
+    +^I::send,+{Up}
+    +^L::send,+{Right}
 ;
-#^J::send,#{Left}
-#^K::send,#{Down}
-#^I::send,#{Up}
-#^L::send,#{Right}
+    #^J::send,#{Left}
+    #^I::send,#{Up}
+    #^L::send,#{Right}
 }
 
 
